@@ -15,7 +15,7 @@ Second, run one of the following options:
 
     export BACKUP_DIR="~/.bash_backup_`date +%Y%m%d`"
     mkdir $BACKUP_DIR
-    mv ~/.bash_profile $BACKUP_DIR/bash_profile && ln -s ~/.bash.d/profile ~/.bash_profile && mv ~/.bashrc $BACKUP_DIR/bashrc && ln -s ~/.bash.d/rc ~/.bashrc
+    mv ~/.bash_profile $BACKUP_DIR/bash_profile && ln -s ~/.bash.d/profile ~/.bash_profile && mv ~/.bashrc $BACKUP_DIR/bashrc && ln -s ~/.bash.d/rc ~/.bashrc && mv ~/.bash_prompt; ln -s ~/.bash.d/prompt ~/.bash_prompt
 
 2. To install destructively, run the following command:
-    rm ~/.bash_profile && ln -s ~/.bash.d/profile ~/.bash_profile && rm ~/.bashrc && ln -s ~/.bash.d/rc ~/.bashrc
+    rm ~/.bash_profile && ln -s ~/.bash.d/profile ~/.bash_profile && rm ~/.bashrc && ln -s ~/.bash.d/rc ~/.bashrc && rm ~/.bash_prompt; ln -s ~/.bash.d/prompt ~/.bash_prompt

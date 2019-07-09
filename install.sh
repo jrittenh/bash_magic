@@ -1,6 +1,39 @@
 #!/bin/bash
 
-INSTALLDIR="$(pwd)"
+BASH_MAGIC_DIR=''
+SYMLINK=false
+
+while getopts 's' flag; do
+    case "${flag}" in
+        s) SYMLINK=true ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+BASH_MAGIC_DIR="${1:-~/.bash.d}"
+BASH_MAGIC_DIR="${BASH_MAGIC_DIR/#\~/$HOME}"
+echo "Installing to ${BASH_MAGIC_DIR}"
+export BASH_MAGIC_DIR
+
+mkdir -p ${BASH_MAGIC_DIR}
+echo "export BASH_MAGIC_DIR="${BASH_MAGIC_DIR}"" > .bash_magic_dir
+
+SRCDIR="$(dirname "$0")"
+if [[ ${SYMLINK} ]]; then
+    ln -s ${SRCDIR}/rc ${BASH_MAGIC_DIR}/
+    ln -s ${SRCDIR}/profile ${BASH_MAGIC_DIR}/
+    ln -s ${SRCDIR}/prompt ${BASH_MAGIC_DIR}/
+    ln -s ${SRCDIR}/.prompt_command ${BASH_MAGIC_DIR}/
+else
+    cp ${SRCDIR}/rc ${BASH_MAGIC_DIR}/
+    cp ${SRCDIR}/profile ${BASH_MAGIC_DIR}/
+    cp ${SRCDIR}/prompt ${BASH_MAGIC_DIR}/
+    cp ${SRCDIR}/.prompt_command ${BASH_MAGIC_DIR}/
+fi
+
+echo "ls -Al ${BASH_MAGIC_DIR}:"
+ls -Al ${BASH_MAGIC_DIR}
 
 echo "Checking for existing '~/.bashrc'"
 if [[ -f ~/.bashrc ]]; then
@@ -10,8 +43,9 @@ if [[ -f ~/.bashrc ]]; then
 fi
 
 echo "Installing new '~/.bashrc'..."
-ln -s ${INSTALLDIR}/rc ~/.bashrc
+ln -s ${BASH_MAGIC_DIR}/rc ~/.bashrc
 echo "Done."
+ls -l ~/.bashrc
 
 echo "Checking for existing '~/.bash_profile'"
 if [[ -f ~/.bash_profile ]]; then
@@ -21,7 +55,12 @@ if [[ -f ~/.bash_profile ]]; then
 fi
 
 echo "Installing new '~/.bash_profile'..."
-ln -s ${INSTALLDIR}/profile ~/.bash_profile
+ln -s ${BASH_MAGIC_DIR}/profile ~/.bash_profile
 echo "Done."
+ls -l ~/.bash_profile
 
 source ~/.bashrc
+
+echo "Install complete and verified. Run"
+echo "  source ~/.bashrc"
+echo "in any open shells to initialize."

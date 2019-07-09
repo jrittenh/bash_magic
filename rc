@@ -10,17 +10,26 @@ else
     STAT_PARAMS="-f %m"
 fi
 
-BASHDIR=${BASHDIR:-~/.bash.d}
-if [[ ! -d ${BASHDIR}/archive ]]; then
-    mkdir ${BASHDIR}/archive
-    echo "*" > ${BASHDIR}/archive/
-    cp ${BASHDIR}/* ${BASHDIR}/archive/
+if [[ -f ${HOME}/.bash_magic_dir ]]; then
+    source ${HOME}/.bash_magic_dir
+fi
+BASH_MAGIC_DIR=${BASH_MAGIC_DIR:-~/.bash.d}
+BASH_MAGIC_DIR="${BASH_MAGIC_DIR/#\~/$HOME}"
+if [[ ! -d ${BASH_MAGIC_DIR}/archive ]]; then
+    mkdir ${BASH_MAGIC_DIR}/archive
+    for FILENAME in ${BASH_MAGIC_DIR}/* ; do
+        if [[ -f "${FILENAME}" ]]; then
+            cp ${FILENAME} ${BASH_MAGIC_DIR}/archive/
+        fi
+    done
 fi
 
-for FILENAME in ${BASHDIR}/* ; do
-    FILE="$(basename \"${FILENAME}\")"
-    FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"
-    declare -x "${FILEVAR}=$(eval \"stat ${STAT_PARAMS} ${FILENAME}\")"
+for FILENAME in ${BASH_MAGIC_DIR}/* ; do
+    if [[ -f "${FILENAME}" ]]; then
+        FILE="$(basename ${FILENAME})"
+        FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"
+        declare -x "${FILEVAR}="$(eval stat ${STAT_PARAMS} ${FILENAME})""
+    fi
 done
 
-export PROMPT_COMMAND="$(cat ${BASHDIR}/.prompt_command | paste -sd ";" -)"
+export PROMPT_COMMAND="$(cat ${BASH_MAGIC_DIR}/.prompt_command | paste -sd ";" -)"

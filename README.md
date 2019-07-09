@@ -12,3 +12,7 @@ Clone the repository to where you would like the script installed; typically
 `~/.bash.d`
 
 Run `./install.sh` from the repository directory.
+
+### Usage
+
+    ./install.sh [-s] [<installdir>]

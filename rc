@@ -11,10 +11,10 @@ if [[ ! -d ${BASHDIR}/archive ]]; then
 fi
 
 for FILENAME in ${BASHDIR}/* ; do
-    FILE="$(basename \"$FILENAME\")"
-    FILEVAR="$(echo IMPORT_$FILE | tr 'a-z' 'A-Z')"
+    FILE="$(basename \"${FILENAME}\")"
+    FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"
     if [[ $FILE != "profile" ]]; then
-        declare -x "$FILEVAR=0"
+        declare -x "${FILEVAR}=0"
     fi
 done
 

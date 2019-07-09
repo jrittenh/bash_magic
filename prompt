@@ -68,16 +68,16 @@ ME="$(basename "$(test -L "${BASH_SOURCE[0]}" && readlink "${BASH_SOURCE[0]}" ||
 BASHDIR=${BASHDIR:-~/.bash.d}
 FILEDIR=$(echo ~/.bash.d)
 for FILENAME in ${BASHDIR}/* ; do
-    FILE="$(basename \"$FILENAME\")"
-    FILEVAR="$(echo IMPORT_$FILE | tr 'a-z' 'A-Z')"
-    if [[ -f $FILENAME ]] ; then
-        if [[ $FILENAME -nt ${BASHDIR}/archive/$FILE ]]; then
+    FILE="$(basename \"${FILENAME}\")"
+    FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"
+    if [[ -f ${FILENAME} ]] ; then
+        if [[ ${FILENAME} -nt ${BASHDIR}/archive/${FILE} ]]; then
             echo "backup $FILE"
-            cp $FILENAME ${BASHDIR}/archive/$FILE
+            cp ${FILENAME} ${BASHDIR}/archive/${FILE}
             declare -x "$FILEVAR=0"
         fi
         if [[ ${!FILEVAR} -eq 0 ]] ; then
-            echo "source $FILE"
+            echo "source ${FILE}"
             declare -x "$FILEVAR=1"
             source $FILENAME
         fi

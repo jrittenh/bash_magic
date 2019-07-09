@@ -1,0 +1,21 @@
+export HISTSIZE=
+export HISTFILESIZE=
+export HISTCONTROL=ignoredups
+shopt -s histappend
+
+BASHDIR=${BASHDIR:-~/.bash.d}
+if [[ ! -d ${BASHDIR}/archive ]]; then
+    mkdir ${BASHDIR}/archive
+    echo "*" > ${BASHDIR}/archive/
+    cp ${BASHDIR}/* ${BASHDIR}/archive/
+fi
+
+for FILENAME in ${BASHDIR}/* ; do
+    FILE="$(basename \"$FILENAME\")"
+    FILEVAR="$(echo IMPORT_$FILE | tr 'a-z' 'A-Z')"
+    if [[ $FILE != "profile" ]]; then
+        declare -x "$FILEVAR=0"
+    fi
+done
+
+export PROMPT_COMMAND="$(cat ${BASHDIR}/.prompt_command | paste -sd ";" -)"

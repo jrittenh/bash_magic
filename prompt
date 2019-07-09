@@ -64,4 +64,24 @@ else
     LOC_COLOR="\[\033[01;31m\]"
 fi
 
-export PROMPT_COMMAND='history -a;export PS1="$LOC_COLOR$CONN\[\033[01;32m\]$LOC\[\033[01;34m\]$SNAME $GITINFO$DIR \[\033[01;32m\]\$\[\033[00m\]"'
+ME="$(basename "$(test -L "${BASH_SOURCE[0]}" && readlink "${BASH_SOURCE[0]}" || echo "${BASH_SOURCE[0]}")")"
+BASHDIR=${BASHDIR:-~/.bash.d}
+FILEDIR=$(echo ~/.bash.d)
+for FILENAME in ${BASHDIR}/* ; do
+    FILE="$(basename \"$FILENAME\")"
+    FILEVAR="$(echo IMPORT_$FILE | tr 'a-z' 'A-Z')"
+    if [[ -f $FILENAME ]] ; then
+        if [[ $FILENAME -nt ${BASHDIR}/archive/$FILE ]]; then
+            echo "backup $FILE"
+            cp $FILENAME ${BASHDIR}/archive/$FILE
+            declare -x "$FILEVAR=0"
+        fi
+        if [[ ${!FILEVAR} -eq 0 ]] ; then
+            echo "source $FILE"
+            declare -x "$FILEVAR=1"
+            source $FILENAME
+        fi
+    fi
+done
+
+export PROMPT_COMMAND="$(cat ${BASHDIR}/.prompt_command | paste -sd ";" -)"

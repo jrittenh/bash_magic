@@ -60,8 +60,10 @@ fi
 
 if [[ "$USERNAME" == "root" ]]; then
     LOC_COLOR="\[\033[01;35m\]"
+    PROMPT_CHAR="#"
 else
     LOC_COLOR="\[\033[01;31m\]"
+    PROMPT_CHAR="$"
 fi
 
 ME="$(basename "$(test -L "${BASH_SOURCE[0]}" && readlink "${BASH_SOURCE[0]}" || echo "${BASH_SOURCE[0]}")")"

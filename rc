@@ -3,6 +3,13 @@ export HISTFILESIZE=
 export HISTCONTROL=ignoredups
 shopt -s histappend
 
+STAT_PARAMS=""
+if stat --version > /dev/null 2>&1; then
+    STAT_PARAMS="-c %Y"
+else
+    STAT_PARAMS="-f %m"
+fi
+
 BASHDIR=${BASHDIR:-~/.bash.d}
 if [[ ! -d ${BASHDIR}/archive ]]; then
     mkdir ${BASHDIR}/archive
@@ -13,9 +20,7 @@ fi
 for FILENAME in ${BASHDIR}/* ; do
     FILE="$(basename \"${FILENAME}\")"
     FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"
-    if [[ $FILE != "profile" ]]; then
-        declare -x "${FILEVAR}=0"
-    fi
+    declare -x "${FILEVAR}=$(eval \"stat ${STAT_PARAMS} ${FILENAME}\")"
 done
 
 export PROMPT_COMMAND="$(cat ${BASHDIR}/.prompt_command | paste -sd ";" -)"

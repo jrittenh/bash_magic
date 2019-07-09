@@ -74,13 +74,13 @@ for FILENAME in ${BASHDIR}/* ; do
     FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"
     if [[ -f ${FILENAME} ]] ; then
         if [[ ${FILENAME} -nt ${BASHDIR}/archive/${FILE} ]]; then
-            echo "backup $FILE"
+            echo "back up $FILE"
             cp ${FILENAME} ${BASHDIR}/archive/${FILE}
-            declare -x "$FILEVAR=0"
+            declare -x "${FILEVAR}=$(eval \"stat ${STAT_PARAMS} ${FILENAME}\")"
         fi
-        if [[ ${!FILEVAR} -eq 0 ]] ; then
+        if [[ "$(eval \"stat ${STAT_PARAMS} ${FILENAME}\")" -gt "${!FILEVAR}" ]]; then
             echo "source ${FILE}"
-            declare -x "$FILEVAR=1"
+            declare -x "${FILEVAR}=$(eval \"stat ${STAT_PARAMS} ${FILENAME}\")"
             source $FILENAME
         fi
     fi

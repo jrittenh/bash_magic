@@ -1,0 +1,67 @@
+# Modify prompt for source (SSH/screen/etc)
+SSH_FLAG=0
+SSH_IP=$(echo $SSH_CLIENT | awk '{ print $1 }')
+
+if [ "$SSH_IP" ] ; then
+    SSH_FLAG=1
+fi
+
+SSH2_IP=$(echo $SSH2_CLIENT | awk '{ print $1 }')
+
+if [ "$SSH2_IP" ] ; then
+    SSH_FLAG=1
+fi
+
+if [ "$SSH_FLAG" -eq 1 ] ; then
+    CONN="ssh"
+elif [ -z "$SESS_SRC" ] ; then
+    CONN="lcl"
+elif [ "$SESS_SRC" == "(:0.0)" -o "$SESS_SRC" == "" ] ; then
+    CONN="lcl"
+else
+    CONN="tel"
+fi
+
+if [ "$CONN" == "lcl" ] ; then
+    CONN=
+else
+    CONN="<$CONN> "
+fi
+
+if [ "$TERM" == "screen" ] ; then
+    SNAME=$(echo $STY | perl -pe 's/\d+\.//g')
+    if [ "$(echo $SNAME | perl -pe 's/(pts).*/$1/g')" = "pts" ] ; then
+        SNAME=screen
+        SNAME=" <$SNAME>"
+    fi
+fi
+
+BRANCH=
+REPO=
+GITINFO="\[\033"
+if git rev-parse --abbrev-ref HEAD 1> /dev/null 2>&1 ; then
+    BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    REPO="$(basename "$(git rev-parse --show-toplevel)")"
+
+    GITINFO="\[\033[01;35m\]$REPO\[\033[01;33m\] ($BRANCH) "
+fi
+
+LOC="\u@\h"
+DIR="\[\033[01;34m\]\W"
+if [ "$ASERVER" != "" ] ; then
+    LOC="$AUSER@$ASERVER"
+    DIR="\[\033[01;34m\]$(pwd | perl -pe 's/^\/(Users|home)\/\w+/~/; s/^~\/mnt\/aleph\/aleph\d\///; s/soft\/aleph\///; s/exlibris\/aleph\/[au]22_1\///')"
+elif [ "$REPO" != "" ] ; then
+    DIR="$(pwd)"
+    #~ echo $DIR
+    DIR="$(echo "$REPO||$DIR" | perl -ne 'my ($a, $b) = split(/\|\|/, $_); $b =~ s/^.*$a\/?/\//; print $b;')"
+    #~ echo $DIR
+fi
+
+if [[ "$USERNAME" == "root" ]]; then
+    LOC_COLOR="\[\033[01;35m\]"
+else
+    LOC_COLOR="\[\033[01;31m\]"
+fi
+
+export PROMPT_COMMAND='history -a;export PS1="$LOC_COLOR$CONN\[\033[01;32m\]$LOC\[\033[01;34m\]$SNAME $GITINFO$DIR \[\033[01;32m\]\$\[\033[00m\]"'

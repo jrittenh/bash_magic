@@ -1,21 +1,14 @@
 # Self-refreshing bash shell
 
-This repo contains a `.bashrc` file that self-refreshes, based on changes to
-files stored in `~/.bash.d/`. At launch, every file in the directory is sourced.
-Each time a command is entered, the prompt checks for new or updated files and,
-if any are found, it sources them. This works across multiple sessions.
+This repo contains a set of scripts to constantly refresh the shell environment.
+At launch, every file in the install directory is sourced.  Every return on the
+command prompt after, the prompt checks for files with newer modification times
+from its environment and sources any that have changed.  This works across
+multiple sessions.
 
 ## Installation
 
-First, clone this repository to `~/.bash.d/`.
+Clone the repository to where you would like the script installed; typically
+`~/.bash.d`
 
-Second, run one of the following options:
-
-1. To install safely, run the following commands:
-
-    export BACKUP_DIR="~/.bash_backup_`date +%Y%m%d`"
-    mkdir $BACKUP_DIR
-    mv ~/.bash_profile $BACKUP_DIR/bash_profile && ln -s ~/.bash.d/profile ~/.bash_profile && mv ~/.bashrc $BACKUP_DIR/bashrc && ln -s ~/.bash.d/rc ~/.bashrc && mv ~/.bash_prompt; ln -s ~/.bash.d/prompt ~/.bash_prompt
-
-2. To install destructively, run the following command:
-    rm ~/.bash_profile && ln -s ~/.bash.d/profile ~/.bash_profile && rm ~/.bashrc && ln -s ~/.bash.d/rc ~/.bashrc && rm ~/.bash_prompt; ln -s ~/.bash.d/prompt ~/.bash_prompt
+Run `./install.sh` from the repository directory.

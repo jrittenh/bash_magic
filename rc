@@ -1,8 +1,3 @@
-export HISTSIZE=
-export HISTFILESIZE=
-export HISTCONTROL=ignoredups
-shopt -s histappend
-
 STAT_PARAMS=""
 if stat --version > /dev/null 2>&1; then
     STAT_PARAMS="-c %Y"
@@ -15,21 +10,4 @@ if [[ -f ${HOME}/.bash_magic_dir ]]; then
 fi
 BASH_MAGIC_DIR=${BASH_MAGIC_DIR:-~/.bash.d}
 BASH_MAGIC_DIR="${BASH_MAGIC_DIR/#\~/$HOME}"
-if [[ ! -d ${BASH_MAGIC_DIR}/archive ]]; then
-    mkdir ${BASH_MAGIC_DIR}/archive
-    for FILENAME in ${BASH_MAGIC_DIR}/* ; do
-        if [[ -f "${FILENAME}" ]]; then
-            cp ${FILENAME} ${BASH_MAGIC_DIR}/archive/
-        fi
-    done
-fi
-
-for FILENAME in ${BASH_MAGIC_DIR}/* ; do
-    if [[ -f "${FILENAME}" ]]; then
-        FILE="$(basename ${FILENAME})"
-        FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"
-        declare -x "${FILEVAR}="$(eval stat ${STAT_PARAMS} ${FILENAME})""
-    fi
-done
-
 export PROMPT_COMMAND="$(cat ${BASH_MAGIC_DIR}/.prompt_command | paste -sd ";" -)"

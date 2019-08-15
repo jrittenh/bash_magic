@@ -71,6 +71,11 @@ BASH_MAGIC_DIR="${BASH_MAGIC_DIR/#\~/$HOME}"
 for FILENAME in ${BASH_MAGIC_DIR}/* ; do
     FILE="$(basename "${FILENAME}")"
     FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"
+    FILELVL="$(echo LVL_${FILE} | tr 'a-z' 'A-Z')"
+    if [[ "${!FILELVL}" -ne "${SHLVL}" ]]; then
+        declare -x "${FILEVAR}=0"
+        declare -x "${FILELVL}=${SHLVL}"
+    fi
     if [[ -f ${FILENAME} ]] ; then
         if [[ ${FILENAME} -nt ${BASH_MAGIC_DIR}/archive/${FILE} ]]; then
             echo "back up ${FILE}"

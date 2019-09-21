@@ -8,10 +8,11 @@ multiple sessions.
 
 ## Installation
 
-Clone the repository to where you would like the script installed; typically
-`~/.bash.d`
+1. Clone the repository.
 
-Run `./install.sh` from the repository directory.
+2. Run `./install.sh` from the repository directory.
+
+3. Enjoy (hopefully)!
 
 ### Usage
 

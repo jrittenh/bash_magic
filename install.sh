@@ -21,11 +21,13 @@ echo "export BASH_MAGIC_DIR="${BASH_MAGIC_DIR}"" > .bash_magic_dir
 
 SRCDIR="$(dirname "$0")"
 if [[ "${SYMLINK}" == "true" ]]; then
+    echo "Symlink bash magic into ${BASH_MAGIC_DIR}"
     ln -s ${SRCDIR}/rc ${BASH_MAGIC_DIR}/
     ln -s ${SRCDIR}/profile ${BASH_MAGIC_DIR}/
     ln -s ${SRCDIR}/prompt ${BASH_MAGIC_DIR}/
     ln -s ${SRCDIR}/.prompt_command ${BASH_MAGIC_DIR}/
 else
+    echo "Copy bash magic into ${BASH_MAGIC_DIR}"
     cp ${SRCDIR}/rc ${BASH_MAGIC_DIR}/
     cp ${SRCDIR}/profile ${BASH_MAGIC_DIR}/
     cp ${SRCDIR}/prompt ${BASH_MAGIC_DIR}/

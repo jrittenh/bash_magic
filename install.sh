@@ -11,8 +11,13 @@ done
 
 shift $(($OPTIND - 1))
 
-BASH_MAGIC_DIR="${1:-~/.bash.d}"
-BASH_MAGIC_DIR="${BASH_MAGIC_DIR/#\~/$HOME}"
+if [[ -s "${HOME}/.bash_magic_dir" ]]; then
+    source ${HOME}/.bash_magic_dir
+else
+    BASH_MAGIC_DIR="${1:-${HOME}/.bash.d}"
+    BASH_MAGIC_DIR="${BASH_MAGIC_DIR/#\~/${HOME}}"
+fi
+
 echo "Installing to ${BASH_MAGIC_DIR}"
 export BASH_MAGIC_DIR
 

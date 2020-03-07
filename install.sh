@@ -22,7 +22,7 @@ echo "Installing to ${BASH_MAGIC_DIR}"
 export BASH_MAGIC_DIR
 
 mkdir -p ${BASH_MAGIC_DIR}
-echo "export BASH_MAGIC_DIR="${BASH_MAGIC_DIR}"" > .bash_magic_dir
+echo "export BASH_MAGIC_DIR=${BASH_MAGIC_DIR}" > ${HOME}/.bash_magic_dir
 
 SRCDIR="$(dirname "$0")"
 if [[ "${SYMLINK}" == "true" ]]; then

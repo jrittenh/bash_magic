@@ -25,6 +25,7 @@ mkdir -p ${BASH_MAGIC_DIR}
 echo "export BASH_MAGIC_DIR=${BASH_MAGIC_DIR}" > ${HOME}/.bash_magic_dir
 
 SRCDIR="$(dirname "$0")"
+
 if [[ "${SYMLINK}" == "true" ]]; then
     echo "Symlink bash magic into ${BASH_MAGIC_DIR}"
     ln -s ${SRCDIR}/rc ${BASH_MAGIC_DIR}/

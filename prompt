@@ -79,6 +79,7 @@ for FILENAME in ${BASH_MAGIC_DIR}/* ; do
     if [[ -f ${FILENAME} ]] ; then
         if [[ ${FILENAME} -nt ${BASH_MAGIC_DIR}/archive/${FILE} ]]; then
             echo "back up ${FILE}"
+            mkdir -p ${BASH_MAGIC_DIR}/archive
             cp ${FILENAME} ${BASH_MAGIC_DIR}/archive/${FILE}
         fi
         if [[ "$(eval "stat ${STAT_PARAMS} ${FILENAME}")" -gt "${!FILEVAR}" ]]; then

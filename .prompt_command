@@ -1,4 +1,4 @@
 history -a
 if [[ -f ${HOME}/.bash_magic_dir ]]; then source ${HOME}/.bash_magic_dir; fi
 source ${BASH_MAGIC_DIR}/prompt
-export PS1="${LOC_COLOR}${CONN}\[\033[01;32m\]${LOC}\[\033[01;34m\]${SNAME} ${GITINFO}${DIR} \[\033[01;32m\]${PROMPT_CHAR}\[\033[00m\]"
+export PS1="${CON_COLOR}${CONN}${LOC_COLOR}${LOC}${PATH_COLOR}${SNAME} ${GITINFO}${DIR} ${PROMPT_COLOR}${PROMPT_CHAR}\[\033[00m\]"

@@ -55,12 +55,18 @@ if [ "$REPO" != "" ] ; then
     #~ echo $DIR
 fi
 
-if [[ "$USERNAME" == "root" ]]; then
-    LOC_COLOR="\[\033[01;35m\]"
-    PROMPT_CHAR="#"
-else
+CON_COLOR="\[\033[01;31m\]"
+LOC_COLOR="\[\033[01;32m\]"
+PATH_COLOR="\[\033[01;34m\]"
+PROMPT_COLOR="\[\033[01;32m\]"
+PROMPT_CHAR="$"
+
+if [[ ${EUID} == 0 ]]; then
+    CON_COLOR="\[\033[01;35m\]"
     LOC_COLOR="\[\033[01;31m\]"
-    PROMPT_CHAR="$"
+    PATH_COLOR="\[\033[01;34m\]"
+    PROMPT_COLOR="\[\033[01;34m\]"
+    PROMPT_CHAR="#"
 fi
 
 if [[ -f ${HOME}/.bash_magic_dir ]]; then

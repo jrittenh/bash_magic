@@ -1,5 +1,6 @@
 STAT_PARAMS=""
-if stat --version > /dev/null 2>&1; then
+stat --version > /dev/null 2>&1
+if [[ $? -gt 0 ]]; then
     STAT_PARAMS="-c %Y"
 else
     STAT_PARAMS="-f %m"

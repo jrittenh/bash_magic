@@ -28,14 +28,14 @@ SRCDIR="$(dirname "$0")"
 
 if [[ "${SYMLINK}" == "true" ]]; then
     echo "Symlink bash magic into ${BASH_MAGIC_DIR}"
-    ln -s ${SRCDIR}/rc ${BASH_MAGIC_DIR}/
-    ln -s ${SRCDIR}/profile ${BASH_MAGIC_DIR}/
+    ln -s ${SRCDIR}/rc ${BASH_MAGIC_DIR}/00_rc
+    ln -s ${SRCDIR}/profile ${BASH_MAGIC_DIR}/00_profile
     ln -s ${SRCDIR}/prompt ${BASH_MAGIC_DIR}/
     ln -s ${SRCDIR}/.prompt_command ${BASH_MAGIC_DIR}/
 else
     echo "Copy bash magic into ${BASH_MAGIC_DIR}"
-    cp ${SRCDIR}/rc ${BASH_MAGIC_DIR}/
-    cp ${SRCDIR}/profile ${BASH_MAGIC_DIR}/
+    cp ${SRCDIR}/rc ${BASH_MAGIC_DIR}/00_rc
+    cp ${SRCDIR}/profile ${BASH_MAGIC_DIR}/00_profile
     cp ${SRCDIR}/prompt ${BASH_MAGIC_DIR}/
     cp ${SRCDIR}/.prompt_command ${BASH_MAGIC_DIR}/
 fi
@@ -51,7 +51,7 @@ if [[ -f ~/.bashrc ]]; then
 fi
 
 echo "Installing new '~/.bashrc'..."
-ln -s ${BASH_MAGIC_DIR}/rc ~/.bashrc
+ln -s ${BASH_MAGIC_DIR}/00_rc ~/.bashrc
 echo "Done."
 ls -l ~/.bashrc
 
@@ -63,7 +63,7 @@ if [[ -f ~/.bash_profile ]]; then
 fi
 
 echo "Installing new '~/.bash_profile'..."
-ln -s ${BASH_MAGIC_DIR}/profile ~/.bash_profile
+ln -s ${BASH_MAGIC_DIR}/00_profile ~/.bash_profile
 echo "Done."
 ls -l ~/.bash_profile
 

@@ -1,9 +1,9 @@
-STAT_PARAMS=""
+BASHD_STAT_PARAMS=""
 stat --version > /dev/null 2>&1
 if [[ $? -eq 0 ]]; then
-    STAT_PARAMS="-c %Y"
+    BASHD_STAT_PARAMS="-c %Y"
 else
-    STAT_PARAMS="-f %m"
+    BASHD_STAT_PARAMS="-f %m"
 fi
 
 if [[ -f ${HOME}/.bash_magic_dir ]]; then

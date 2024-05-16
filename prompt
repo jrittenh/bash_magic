@@ -88,9 +88,9 @@ for FILENAME in ${BASH_MAGIC_DIR}/* ; do
             mkdir -p ${BASH_MAGIC_DIR}/archive
             cp ${FILENAME} ${BASH_MAGIC_DIR}/archive/${FILE}
         fi
-        if [[ "$(eval "stat ${STAT_PARAMS} ${FILENAME}")" -gt "${!FILEVAR}" ]]; then
+        if [[ "$(eval "stat ${BASHD_STAT_PARAMS} ${FILENAME}")" -gt "${!FILEVAR}" ]]; then
             echo "source ${FILE}"
-            declare -x "${FILEVAR}=$(eval "stat ${STAT_PARAMS} ${FILENAME}")"
+            declare -x "${FILEVAR}=$(eval "stat ${BASHD_STAT_PARAMS} ${FILENAME}")"
             source $FILENAME
         fi
     fi

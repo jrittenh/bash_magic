@@ -1,11 +1,3 @@
-BASHD_STAT_PARAMS=""
-stat --version > /dev/null 2>&1
-if [[ $? -eq 0 ]]; then
-    BASHD_STAT_PARAMS="-c %Y"
-else
-    BASHD_STAT_PARAMS="-f %m"
-fi
-
 if [[ -f ${HOME}/.bash_magic_dir ]]; then
     source ${HOME}/.bash_magic_dir
 fi

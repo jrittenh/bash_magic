@@ -74,6 +74,15 @@ if [[ -f ${HOME}/.bash_magic_dir ]]; then
 fi
 BASH_MAGIC_DIR=${BASH_MAGIC_DIR:-~/.bash.d}
 BASH_MAGIC_DIR="${BASH_MAGIC_DIR/#\~/$HOME}"
+
+BASHD_STAT_PARAMS=""
+stat --version > /dev/null 2>&1
+if [[ $? -eq 0 ]]; then
+    BASHD_STAT_PARAMS="-c %Y"
+else
+    BASHD_STAT_PARAMS="-f %m"
+fi
+
 for FILENAME in ${BASH_MAGIC_DIR}/* ; do
     FILE="$(basename "${FILENAME}")"
     FILEVAR="$(echo IMPORT_${FILE} | tr 'a-z' 'A-Z')"

@@ -17,3 +17,9 @@ multiple sessions.
 ### Usage
 
     ./install.sh [-s] [<installdir>]
+
+#### Parameters
+
+|---|------------|---------------------------------------------------|
+|-s |--silent    |Run the installer silently.                        |
+|   |<installdir>|Set the installation directory (Default: `.bash.d`)|

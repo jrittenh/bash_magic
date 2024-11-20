@@ -20,6 +20,7 @@ multiple sessions.
 
 #### Parameters
 
+|   |            |                                                   |
 |---|------------|---------------------------------------------------|
 |-s |--silent    |Run the installer silently.                        |
 |   |<installdir>|Set the installation directory (Default: `.bash.d`)|

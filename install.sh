@@ -44,7 +44,7 @@ echo "ls -Al ${BASH_MAGIC_DIR}:"
 ls -Al ${BASH_MAGIC_DIR}
 
 echo "Checking for existing '~/.bashrc'"
-if [[ -f ~/.bashrc ]]; then
+if [[ -f ~/.bashrc ]] || [[ -L ~/.bashrc ]]; then
     echo "Archiving existing '~/.bashrc'..."
     mv ~/.bashrc ~/.bashrc.$(date +%Y%m%dT%H%M%S)
     echo "Done."
@@ -56,7 +56,7 @@ echo "Done."
 ls -l ~/.bashrc
 
 echo "Checking for existing '~/.bash_profile'"
-if [[ -f ~/.bash_profile ]]; then
+if [[ -f ~/.bash_profile ]] || [[ -L ~/.bash_profile ]]; then
     echo "Archiving existing '~/.bash_profile'..."
     mv ~/.bash_profile ~/.bash_profile.$(date +%Y%m%dT%H%M%S)
     echo "Done."

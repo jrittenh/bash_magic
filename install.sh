@@ -24,6 +24,11 @@ export BASH_MAGIC_DIR
 mkdir -p ${BASH_MAGIC_DIR}
 echo "export BASH_MAGIC_DIR=${BASH_MAGIC_DIR}" > ${HOME}/.bash_magic_dir
 
+if [[ -n "$( ls -A ${BASH_MAGIC_DIR} )" ]]; then
+    mkdir -p ${BASH_MAGIC_DIR}/archive
+    find ${BASH_MAGIC_DIR} -maxdepth 1 -type f | xargs mv -t ${BASH_MAGIC_DIR}/archive/
+fi
+
 SRCDIR="$(dirname "$0")"
 
 if [[ "${SYMLINK}" == "true" ]]; then
